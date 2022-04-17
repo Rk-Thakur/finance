@@ -97,15 +97,6 @@ class _financeState extends State<finance> {
                                     borderSide: BorderSide(
                                         width: 3, color: Colors.red))),
                             value: selectedItem,
-                            onTap: () async {
-                              if (_form.currentState!.validate()) {
-                                ref.read(calculationprovider).calculation(
-                                    interest:
-                                        double.parse(interestController.text),
-                                    year: double.parse(yearController.text),
-                                    type: selectedItem.toString());
-                              }
-                            },
                             items: items
                                 .map((item) => DropdownMenuItem(
                                     value: item,
@@ -137,10 +128,15 @@ class _financeState extends State<finance> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            yearController.clear();
-                            interestController.clear();
+                            if (_form.currentState!.validate()) {
+                              ref.read(calculationprovider).calculation(
+                                  interest:
+                                      double.parse(interestController.text),
+                                  year: double.parse(yearController.text),
+                                  type: selectedItem.toString());
+                            }
                           },
-                          child: Text("clear"))
+                          child: Text("Check"))
                     ],
                   ),
                 ),
